@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { InputTodo } from "./components/InputTodo";
+import { IncompletedTodos } from "./components/IncompletedTodos";
+import { Completed } from "./components/Completed";
 import "./styles.css";
 
 export const App = () => {
@@ -44,44 +47,18 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area bl_todo">
-        <input
-          value={todoText}
-          onChange={onChangeTodotext}
-          placeholder="form to do"
-        />
-        <button onClick={onClickAdd}>Add</button>
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChange={onChangeTodotext}
+        onClick={onClickAdd}
+      />
+      <IncompletedTodos
+        incompleteTodos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+      />
 
-      <div className="incompleted">
-        <p className="main__title">Not Done</p>
-
-        <ul>
-          {incompleteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="bl_todo">
-                <li>{todo}</li>
-                <button onClick={() => onClickComplete(index)}>Done</button>
-                <button onClick={() => onClickDelete(index)}>Delete</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
-
-      <div className="completed">
-        <p className="main__title">Done</p>
-        <ul>
-          {completeTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="bl_todo">
-                <li>{todo}</li>
-                <button onClick={() => onClickReturn(index)}>Return</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
+      <Completed completeTodos={completeTodos} onClickReturn={onClickReturn} />
     </>
   );
 };
